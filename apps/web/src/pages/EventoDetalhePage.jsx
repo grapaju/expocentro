@@ -1,218 +1,99 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Checkbox } from '@/components/ui/checkbox';
 import { ArrowLeft, Edit, FileText } from 'lucide-react';
 
 function EventoDetalhePage() {
   const { id } = useParams();
 
   const evento = {
+    id: id || '1',
     nome: 'Feira Construir SC 2026',
-    empresa: 'Feira Construir SC',
-    tipo: 'Feira',
-    dataInicial: '2026-07-15',
-    dataFinal: '2026-07-18',
-    publicoEstimado: 15000,
+    locatario: 'Feira Construir SC Ltda.',
+    tipoEvento: 'Feira',
+    tipoContrato: 'Locação onerosa',
+    periodoMontagem: '14/07/2026',
+    periodoEvento: '15/07/2026 a 18/07/2026',
+    periodoDesmontagem: '19/07/2026',
+    horarioContratado: '08:00 às 22:00',
     valorContratado: 285000,
-    statusComercial: 'Confirmado',
+    receitaRecebida: 171000,
     statusContratual: 'Assinado',
     statusFinanceiro: 'Parcial',
-    statusOperacional: 'Em andamento',
+    statusOperacional: 'Montagem em acompanhamento',
+    pendenciaPrincipal: 'Aguardando pagamento',
   };
 
   const espacosPeriodos = [
-    {
-      espaco: 'Pavilhão Norte',
-      periodo: '15/07 a 18/07',
-      horario: '08:00 - 20:00',
-      valor: 180000,
-      observacoes: 'Montagem dia 14/07',
-      servicosInclusos: 'Limpeza, segurança, energia',
-    },
-    {
-      espaco: 'Praça de alimentação',
-      periodo: '15/07 a 18/07',
-      horario: '10:00 - 22:00',
-      valor: 45000,
-      observacoes: 'Área exclusiva',
-      servicosInclusos: 'Limpeza, mesas e cadeiras',
-    },
-    {
-      espaco: 'Credenciamento',
-      periodo: '15/07 a 18/07',
-      horario: '07:00 - 21:00',
-      valor: 15000,
-      observacoes: 'Sistema próprio',
-      servicosInclusos: 'Estrutura básica',
-    },
+    { espaco: 'Pavilhão Norte', montagem: '14/07 08:00 às 22:00', evento: '15/07 a 18/07 08:00 às 22:00', desmontagem: '19/07 08:00 às 18:00', valor: 180000 },
+    { espaco: 'Pavilhão Sul', montagem: '14/07 09:00 às 20:00', evento: '15/07 a 18/07 09:00 às 21:00', desmontagem: '19/07 08:00 às 16:00', valor: 0 },
+    { espaco: 'Torre Norte', montagem: '14/07 10:00 às 18:00', evento: '16/07 a 18/07 09:00 às 20:00', desmontagem: '19/07 08:00 às 14:00', valor: 0 },
+    { espaco: 'Torre Sul', montagem: '14/07 10:00 às 18:00', evento: '16/07 a 18/07 09:00 às 20:00', desmontagem: '19/07 08:00 às 14:00', valor: 0 },
+    { espaco: 'Auditório Torre 1', montagem: '14/07 12:00 às 18:00', evento: '15/07 a 18/07 09:00 às 19:00', desmontagem: '19/07 08:00 às 12:00', valor: 20000 },
+    { espaco: 'Auditório Torre 2', montagem: '14/07 12:00 às 18:00', evento: '15/07 a 18/07 09:00 às 19:00', desmontagem: '19/07 08:00 às 12:00', valor: 15000 },
+    { espaco: 'Salas modulares', montagem: '14/07 09:00 às 17:00', evento: '15/07 a 18/07 09:00 às 18:00', desmontagem: '19/07 08:00 às 12:00', valor: 9500 },
+    { espaco: 'Credenciamento', montagem: '14/07 07:00 às 20:00', evento: '15/07 a 18/07 07:00 às 22:00', desmontagem: '19/07 07:00 às 12:00', valor: 7000 },
+    { espaco: 'Praça de alimentação', montagem: '14/07 10:00 às 20:00', evento: '15/07 a 18/07 10:00 às 23:00', desmontagem: '19/07 08:00 às 14:00', valor: 45000 },
+    { espaco: 'Área comum', montagem: '14/07 08:00 às 22:00', evento: '15/07 a 18/07 08:00 às 22:00', desmontagem: '19/07 08:00 às 18:00', valor: 8500 },
   ];
 
   const contrato = {
     numero: 'CONT-2026-023',
-    dataEmissao: '2026-06-01',
-    dataAssinatura: '2026-06-10',
-    locatario: 'Feira Construir Santa Catarina Ltda.',
-    representanteLegal: 'Paulo Oliveira',
-    objeto: 'Locação de espaços para feira de construção',
-    finalidade: 'Feira comercial do setor de construção civil',
-    valorTotal: 285000,
-    formaPagamento: '3 parcelas',
-    caucao: 28500,
-    contratoAnexado: true,
-    contratoAssinado: true,
-    regulamentoEntregue: true,
-    pendenciasContratuais: 'Nenhuma',
+    locador: 'Consórcio BC Eventos SPE Ltda.',
+    representanteLegal: 'Paulo Henrique de Oliveira',
+    cnpj: '11.222.333/0001-44',
+    email: 'juridico@feiraconstruir.com.br',
+    telefone: '(47) 99999-1111',
+    objeto: 'Locação de espaços para realização de feira de construção civil.',
+    periodoLocacao: '14/07/2026 a 19/07/2026',
   };
 
   const parcelas = [
-    {
-      parcela: '1/3',
-      vencimento: '2026-06-15',
-      valor: 95000,
-      status: 'Pago',
-      dataPagamento: '2026-06-14',
-      comprovante: 'Anexado',
-    },
-    {
-      parcela: '2/3',
-      vencimento: '2026-07-01',
-      valor: 95000,
-      status: 'Pago',
-      dataPagamento: '2026-06-30',
-      comprovante: 'Anexado',
-    },
-    {
-      parcela: '3/3',
-      vencimento: '2026-07-20',
-      valor: 95000,
-      status: 'Pendente',
-      dataPagamento: null,
-      comprovante: null,
-    },
+    { item: '1/3', vencimento: '15/06/2026', valor: 85500, status: 'Pago' },
+    { item: '2/3', vencimento: '01/07/2026', valor: 114000, status: 'Pago' },
+    { item: '3/3', vencimento: '20/07/2026', valor: 85500, status: 'Aguardando pagamento' },
   ];
 
-  const checklistAntes = [
-    { item: 'Contrato assinado', concluido: true },
-    { item: 'Pagamento primeira parcela', concluido: true },
-    { item: 'Regulamento entregue', concluido: true },
-    { item: 'Planta baixa aprovada', concluido: true },
-    { item: 'Seguro contratado', concluido: true },
-    { item: 'Alvará de funcionamento', concluido: false },
-    { item: 'Corpo de bombeiros notificado', concluido: false },
-  ];
-
-  const checklistDurante = [
-    { item: 'Credenciamento funcionando', concluido: false },
-    { item: 'Segurança posicionada', concluido: false },
-    { item: 'Limpeza em andamento', concluido: false },
-    { item: 'Energia estabilizada', concluido: false },
-    { item: 'Internet funcionando', concluido: false },
-  ];
-
-  const checklistApos = [
-    { item: 'Vistoria final realizada', concluido: false },
-    { item: 'Danos identificados', concluido: false },
-    { item: 'Nota de débito emitida', concluido: false },
-    { item: 'Devolução de caução', concluido: false },
-    { item: 'Termo de encerramento assinado', concluido: false },
+  const operacional = [
+    { fase: 'Pré-evento', situacao: 'Concluída', detalhe: 'Reunião técnica realizada e documentação validada.' },
+    { fase: 'Montagem', situacao: 'Em andamento', detalhe: 'Controle de acesso e segurança em operação.' },
+    { fase: 'Durante o evento', situacao: 'Programada', detalhe: 'Equipe operacional escalada por turno.' },
+    { fase: 'Desmontagem', situacao: 'Programada', detalhe: 'Janela contratada para 19/07 até 18h.' },
+    { fase: 'Pós-evento', situacao: 'A iniciar', detalhe: 'Aguardando vistoria final e termo de devolução.' },
   ];
 
   const despesasPosEvento = [
-    {
-      categoria: 'Limpeza',
-      descricao: 'Limpeza profunda pós-evento',
-      quantidade: 1,
-      valorUnitario: 8500,
-      valorTotal: 8500,
-      responsavel: 'Equipe operacional',
-      data: '2026-07-19',
-      statusCobranca: 'A lançar',
-      observacoes: '',
-    },
-    {
-      categoria: 'Manutenção',
-      descricao: 'Reparo de piso danificado',
-      quantidade: 45,
-      valorUnitario: 120,
-      valorTotal: 5400,
-      responsavel: 'Equipe manutenção',
-      data: '2026-07-20',
-      statusCobranca: 'A lançar',
-      observacoes: 'Área pavilhão norte',
-    },
+    { categoria: 'Energia elétrica', valor: 'R$ 4.500', status: 'Lançada' },
+    { categoria: 'Ar-condicionado', valor: 'R$ 1.200', status: 'Lançada' },
+    { categoria: 'Limpeza', valor: 'R$ 8.500', status: 'Lançada' },
+    { categoria: 'Danos/avarias', valor: 'R$ 3.500', status: 'Pendente de cobrança' },
+    { categoria: 'Materiais não retirados', valor: 'R$ 1.100', status: 'Pendente de cobrança' },
   ];
 
   const historico = [
-    {
-      data: '2026-06-01',
-      tipo: 'Proposta',
-      descricao: 'Proposta comercial enviada',
-      responsavel: 'Marina Silva',
-    },
-    {
-      data: '2026-06-05',
-      tipo: 'Contato',
-      descricao: 'Reunião para ajustes na proposta',
-      responsavel: 'Marina Silva',
-    },
-    {
-      data: '2026-06-10',
-      tipo: 'Contrato',
-      descricao: 'Contrato assinado',
-      responsavel: 'Marina Silva',
-    },
-    {
-      data: '2026-06-14',
-      tipo: 'Pagamento',
-      descricao: 'Primeira parcela recebida',
-      responsavel: 'Financeiro',
-    },
-    {
-      data: '2026-06-30',
-      tipo: 'Pagamento',
-      descricao: 'Segunda parcela recebida',
-      responsavel: 'Financeiro',
-    },
+    { data: '01/06/2026', acao: 'Proposta enviada', responsavel: 'Comercial' },
+    { data: '10/06/2026', acao: 'Contrato assinado', responsavel: 'Jurídico' },
+    { data: '14/06/2026', acao: 'Parcela 1 recebida', responsavel: 'Financeiro' },
+    { data: '30/06/2026', acao: 'Parcela 2 recebida', responsavel: 'Financeiro' },
+    { data: '10/07/2026', acao: 'Reunião técnica realizada', responsavel: 'Operacional' },
   ];
 
-  const getStatusBadge = (status, type) => {
-    const variants = {
-      contratual: {
-        'Assinado': 'default',
-        'Pendente': 'secondary',
-      },
-      financeiro: {
-        'Quitado': 'default',
-        'Parcial': 'secondary',
-        'Pago': 'default',
-        'Pendente': 'secondary',
-      },
-      operacional: {
-        'Concluído': 'default',
-        'Em andamento': 'secondary',
-      },
-      cobranca: {
-        'A lançar': 'outline',
-        'Lançado': 'secondary',
-        'Pago': 'default',
-      },
-    };
-
-    return <Badge variant={variants[type]?.[status] || 'outline'}>{status}</Badge>;
+  const getBadge = (status) => {
+    if (status === 'Assinado' || status === 'Pago' || status === 'Concluída') return <Badge className="badge-status-green">{status}</Badge>;
+    if (status === 'Parcial' || status === 'Em andamento' || status === 'Programada' || status === 'Lançada') return <Badge className="badge-status-yellow">{status}</Badge>;
+    if (status.includes('Aguardando') || status.includes('Pendente') || status === 'A iniciar') return <Badge className="badge-status-red">{status}</Badge>;
+    return <Badge className="badge-status-neutral">{status}</Badge>;
   };
 
   return (
     <>
       <Helmet>
         <title>{`${evento.nome} - Expocentro Gestão 360`}</title>
-        <meta name="description" content="Detalhes completos do evento" />
       </Helmet>
 
       <div className="space-y-6">
@@ -225,376 +106,218 @@ function EventoDetalhePage() {
             </Button>
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-1">{evento.nome}</h1>
-              <p className="text-muted-foreground">{evento.empresa}</p>
+              <p className="text-muted-foreground">{evento.locatario}</p>
             </div>
           </div>
           <Button className="gap-2">
             <Edit className="h-4 w-4" />
-            Editar
+            Editar evento
           </Button>
         </div>
 
         <Tabs defaultValue="resumo" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="resumo">Resumo</TabsTrigger>
-            <TabsTrigger value="espacos">Espaços e Períodos</TabsTrigger>
-            <TabsTrigger value="contrato">Contrato</TabsTrigger>
-            <TabsTrigger value="financeiro">Financeiro</TabsTrigger>
-            <TabsTrigger value="operacional">Operacional</TabsTrigger>
-            <TabsTrigger value="despesas">Despesas Pós-Evento</TabsTrigger>
-            <TabsTrigger value="historico">Histórico</TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto pb-2">
+            <TabsList className="h-11 w-max justify-start">
+              <TabsTrigger value="resumo">Resumo</TabsTrigger>
+              <TabsTrigger value="espacos">Espaços e períodos</TabsTrigger>
+              <TabsTrigger value="contrato">Contrato</TabsTrigger>
+              <TabsTrigger value="financeiro">Financeiro</TabsTrigger>
+              <TabsTrigger value="operacional">Operacional</TabsTrigger>
+              <TabsTrigger value="fechamento">Fechamento pós-evento</TabsTrigger>
+              <TabsTrigger value="historico">Histórico</TabsTrigger>
+            </TabsList>
+          </div>
 
-          <TabsContent value="resumo" className="space-y-6">
+          <TabsContent value="resumo">
             <Card>
               <CardHeader>
-                <CardTitle>Informações gerais</CardTitle>
+                <CardTitle>Resumo executivo do evento</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Nome do evento</p>
-                    <p className="text-foreground">{evento.nome}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Empresa</p>
-                    <p className="text-foreground">{evento.empresa}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Tipo</p>
-                    <p className="text-foreground">{evento.tipo}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Data inicial</p>
-                    <p className="text-foreground">{new Date(evento.dataInicial).toLocaleDateString('pt-BR')}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Data final</p>
-                    <p className="text-foreground">{new Date(evento.dataFinal).toLocaleDateString('pt-BR')}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Público estimado</p>
-                    <p className="text-foreground">{evento.publicoEstimado.toLocaleString('pt-BR')}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Valor contratado</p>
-                    <p className="text-foreground">R$ {evento.valorContratado.toLocaleString('pt-BR')}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Status comercial</p>
-                    {getStatusBadge(evento.statusComercial, 'comercial')}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Status contratual</p>
-                    {getStatusBadge(evento.statusContratual, 'contratual')}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Status financeiro</p>
-                    {getStatusBadge(evento.statusFinanceiro, 'financeiro')}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Status operacional</p>
-                    {getStatusBadge(evento.statusOperacional, 'operacional')}
-                  </div>
+                  <div><p className="text-sm text-muted-foreground">Nome do evento</p><p className="font-semibold">{evento.nome}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Locatário / empresa</p><p className="font-semibold">{evento.locatario}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Tipo de evento</p><p className="font-semibold">{evento.tipoEvento}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Período de montagem</p><p className="font-semibold">{evento.periodoMontagem}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Período do evento</p><p className="font-semibold">{evento.periodoEvento}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Período de desmontagem</p><p className="font-semibold">{evento.periodoDesmontagem}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Horário contratado</p><p className="font-semibold">{evento.horarioContratado}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Valor contratado</p><p className="font-semibold">R$ {evento.valorContratado.toLocaleString('pt-BR')}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Receita recebida</p><p className="font-semibold">R$ {evento.receitaRecebida.toLocaleString('pt-BR')}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Tipo de contrato</p><p className="font-semibold">{evento.tipoContrato}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Situação contratual</p>{getBadge(evento.statusContratual)}</div>
+                  <div><p className="text-sm text-muted-foreground">Situação financeira</p>{getBadge(evento.statusFinanceiro)}</div>
+                  <div><p className="text-sm text-muted-foreground">Situação operacional</p>{getBadge(evento.statusOperacional)}</div>
+                  <div><p className="text-sm text-muted-foreground">Pendência-chave</p>{getBadge(evento.pendenciaPrincipal)}</div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="espacos" className="space-y-6">
+          <TabsContent value="espacos">
             <Card>
               <CardHeader>
-                <CardTitle>Espaços e períodos locados</CardTitle>
+                <CardTitle>Espaços e períodos contratados (múltiplos)</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Espaço</TableHead>
-                        <TableHead>Data/período</TableHead>
-                        <TableHead>Horário</TableHead>
-                        <TableHead>Valor</TableHead>
-                        <TableHead>Observações</TableHead>
-                        <TableHead>Serviços inclusos</TableHead>
+              <CardContent className="p-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Espaço locado</TableHead>
+                      <TableHead>Montagem</TableHead>
+                      <TableHead>Evento</TableHead>
+                      <TableHead>Desmontagem</TableHead>
+                      <TableHead>Valor por espaço</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {espacosPeriodos.map((item) => (
+                      <TableRow key={item.espaco}>
+                        <TableCell className="font-medium">{item.espaco}</TableCell>
+                        <TableCell>{item.montagem}</TableCell>
+                        <TableCell>{item.evento}</TableCell>
+                        <TableCell>{item.desmontagem}</TableCell>
+                        <TableCell>R$ {item.valor.toLocaleString('pt-BR')}</TableCell>
                       </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {espacosPeriodos.map((item, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="font-medium">{item.espaco}</TableCell>
-                          <TableCell>{item.periodo}</TableCell>
-                          <TableCell>{item.horario}</TableCell>
-                          <TableCell>R$ {item.valor.toLocaleString('pt-BR')}</TableCell>
-                          <TableCell>{item.observacoes}</TableCell>
-                          <TableCell>{item.servicosInclusos}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
+                    ))}
+                  </TableBody>
+                </Table>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="contrato" className="space-y-6">
+          <TabsContent value="contrato">
             <Card>
               <CardHeader>
-                <CardTitle>Informações contratuais</CardTitle>
+                <CardTitle>Dados contratuais vinculados</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Número do contrato</p>
-                    <p className="text-foreground">{contrato.numero}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Data de emissão</p>
-                    <p className="text-foreground">{new Date(contrato.dataEmissao).toLocaleDateString('pt-BR')}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Data de assinatura</p>
-                    <p className="text-foreground">{new Date(contrato.dataAssinatura).toLocaleDateString('pt-BR')}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Locatário</p>
-                    <p className="text-foreground">{contrato.locatario}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Representante legal</p>
-                    <p className="text-foreground">{contrato.representanteLegal}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Valor total</p>
-                    <p className="text-foreground">R$ {contrato.valorTotal.toLocaleString('pt-BR')}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Forma de pagamento</p>
-                    <p className="text-foreground">{contrato.formaPagamento}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Caução</p>
-                    <p className="text-foreground">R$ {contrato.caucao.toLocaleString('pt-BR')}</p>
-                  </div>
-                  <div className="md:col-span-2">
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Objeto</p>
-                    <p className="text-foreground">{contrato.objeto}</p>
-                  </div>
-                  <div className="md:col-span-2">
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Finalidade</p>
-                    <p className="text-foreground">{contrato.finalidade}</p>
-                  </div>
-                  <div className="md:col-span-2 flex gap-6">
-                    <div className="flex items-center gap-2">
-                      <Checkbox checked={contrato.contratoAssinado} disabled />
-                      <span className="text-sm">Contrato assinado</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Checkbox checked={contrato.regulamentoEntregue} disabled />
-                      <span className="text-sm">Regulamento entregue</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Checkbox checked={contrato.contratoAnexado} disabled />
-                      <span className="text-sm">Contrato anexado</span>
-                    </div>
-                  </div>
-                  <div className="md:col-span-2">
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Pendências contratuais</p>
-                    <p className="text-foreground">{contrato.pendenciasContratuais}</p>
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div><p className="text-sm text-muted-foreground">Número do contrato</p><p className="font-semibold">{contrato.numero}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Locador</p><p className="font-semibold">{contrato.locador}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Representante legal</p><p className="font-semibold">{contrato.representanteLegal}</p></div>
+                  <div><p className="text-sm text-muted-foreground">CNPJ</p><p className="font-semibold">{contrato.cnpj}</p></div>
+                  <div><p className="text-sm text-muted-foreground">E-mail</p><p className="font-semibold">{contrato.email}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Telefone</p><p className="font-semibold">{contrato.telefone}</p></div>
+                  <div className="md:col-span-2"><p className="text-sm text-muted-foreground">Objeto/finalidade</p><p className="font-semibold">{contrato.objeto}</p></div>
+                  <div><p className="text-sm text-muted-foreground">Período de locação</p><p className="font-semibold">{contrato.periodoLocacao}</p></div>
                 </div>
+                <Button variant="outline" className="gap-2" asChild>
+                  <Link to="/propostas-contratos/1">
+                    <FileText className="h-4 w-4" />
+                    Abrir detalhe completo do contrato
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="financeiro" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <Card>
-                <CardContent className="p-6">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Valor contratado</p>
-                  <p className="text-2xl font-bold text-foreground">R$ 285.000</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Valor sem caução</p>
-                  <p className="text-2xl font-bold text-foreground">R$ 256.500</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Caução</p>
-                  <p className="text-2xl font-bold text-foreground">R$ 28.500</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Status</p>
-                  <Badge variant="secondary" className="mt-1">Parcial</Badge>
-                </CardContent>
-              </Card>
+              <Card><CardContent className="p-6"><p className="text-sm text-muted-foreground">Valor da locação</p><p className="text-2xl font-bold">R$ 285.000</p></CardContent></Card>
+              <Card><CardContent className="p-6"><p className="text-sm text-muted-foreground">Caução (20%)</p><p className="text-2xl font-bold">R$ 57.000</p></CardContent></Card>
+              <Card><CardContent className="p-6"><p className="text-sm text-muted-foreground">Receita recebida</p><p className="text-2xl font-bold">R$ 171.000</p></CardContent></Card>
+              <Card><CardContent className="p-6"><p className="text-sm text-muted-foreground">Saldo pendente</p><p className="text-2xl font-bold text-destructive">R$ 114.000</p></CardContent></Card>
             </div>
 
             <Card>
-              <CardHeader>
-                <CardTitle>Parcelas</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Parcela</TableHead>
-                        <TableHead>Vencimento</TableHead>
-                        <TableHead>Valor</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Data de pagamento</TableHead>
-                        <TableHead>Comprovante</TableHead>
+              <CardHeader><CardTitle>Parcelas e vencimentos</CardTitle></CardHeader>
+              <CardContent className="p-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Parcela</TableHead>
+                      <TableHead>Vencimento</TableHead>
+                      <TableHead>Valor</TableHead>
+                      <TableHead>Situação</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {parcelas.map((parcela) => (
+                      <TableRow key={parcela.item}>
+                        <TableCell className="font-medium">{parcela.item}</TableCell>
+                        <TableCell>{parcela.vencimento}</TableCell>
+                        <TableCell>R$ {parcela.valor.toLocaleString('pt-BR')}</TableCell>
+                        <TableCell>{getBadge(parcela.status)}</TableCell>
                       </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {parcelas.map((parcela, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="font-medium">{parcela.parcela}</TableCell>
-                          <TableCell>{new Date(parcela.vencimento).toLocaleDateString('pt-BR')}</TableCell>
-                          <TableCell>R$ {parcela.valor.toLocaleString('pt-BR')}</TableCell>
-                          <TableCell>{getStatusBadge(parcela.status, 'financeiro')}</TableCell>
-                          <TableCell>{parcela.dataPagamento ? new Date(parcela.dataPagamento).toLocaleDateString('pt-BR') : '-'}</TableCell>
-                          <TableCell>
-                            {parcela.comprovante ? (
-                              <Button variant="ghost" size="sm" className="gap-2">
-                                <FileText className="h-4 w-4" />
-                                Ver
-                              </Button>
-                            ) : '-'}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
+                    ))}
+                  </TableBody>
+                </Table>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="operacional" className="space-y-6">
+          <TabsContent value="operacional">
             <Card>
-              <CardHeader>
-                <CardTitle>Checklist antes do evento</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {checklistAntes.map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <Checkbox checked={item.concluido} />
-                      <span className={item.concluido ? 'text-foreground' : 'text-muted-foreground'}>
-                        {item.item}
-                      </span>
+              <CardHeader><CardTitle>Situação operacional por fase</CardTitle></CardHeader>
+              <CardContent className="space-y-3">
+                {operacional.map((item) => (
+                  <div key={item.fase} className="rounded-md border border-border bg-muted/20 p-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="font-semibold">{item.fase}</p>
+                      {getBadge(item.situacao)}
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Checklist durante o evento</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {checklistDurante.map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <Checkbox checked={item.concluido} />
-                      <span className={item.concluido ? 'text-foreground' : 'text-muted-foreground'}>
-                        {item.item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Checklist após o evento</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {checklistApos.map((item, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <Checkbox checked={item.concluido} />
-                      <span className={item.concluido ? 'text-foreground' : 'text-muted-foreground'}>
-                        {item.item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                    <p className="text-sm text-muted-foreground">{item.detalhe}</p>
+                  </div>
+                ))}
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="despesas" className="space-y-6">
+          <TabsContent value="fechamento" className="space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle>Despesas pós-evento</CardTitle>
-              </CardHeader>
+              <CardHeader><CardTitle>Fechamento pós-evento</CardTitle></CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Categoria</TableHead>
-                        <TableHead>Descrição</TableHead>
-                        <TableHead>Quantidade</TableHead>
-                        <TableHead>Valor unitário</TableHead>
-                        <TableHead>Valor total</TableHead>
-                        <TableHead>Responsável</TableHead>
-                        <TableHead>Data</TableHead>
-                        <TableHead>Status de cobrança</TableHead>
-                        <TableHead>Observações</TableHead>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <div className="rounded-md border border-border p-4">
+                    <p className="text-sm text-muted-foreground">Termo de devolução</p>
+                    <p className="font-semibold">Pendente de assinatura</p>
+                  </div>
+                  <div className="rounded-md border border-border p-4">
+                    <p className="text-sm text-muted-foreground">Nota de débito</p>
+                    <p className="font-semibold">Em emissão</p>
+                  </div>
+                  <div className="rounded-md border border-border p-4">
+                    <p className="text-sm text-muted-foreground">Prazo de pagamento da nota de débito</p>
+                    <p className="font-semibold">15 dias</p>
+                  </div>
+                </div>
+
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Categoria de despesa</TableHead>
+                      <TableHead>Valor</TableHead>
+                      <TableHead>Situação</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {despesasPosEvento.map((item) => (
+                      <TableRow key={item.categoria}>
+                        <TableCell className="font-medium">{item.categoria}</TableCell>
+                        <TableCell>{item.valor}</TableCell>
+                        <TableCell>{getBadge(item.status)}</TableCell>
                       </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {despesasPosEvento.map((despesa, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="font-medium">{despesa.categoria}</TableCell>
-                          <TableCell>{despesa.descricao}</TableCell>
-                          <TableCell>{despesa.quantidade}</TableCell>
-                          <TableCell>R$ {despesa.valorUnitario.toLocaleString('pt-BR')}</TableCell>
-                          <TableCell>R$ {despesa.valorTotal.toLocaleString('pt-BR')}</TableCell>
-                          <TableCell>{despesa.responsavel}</TableCell>
-                          <TableCell>{new Date(despesa.data).toLocaleDateString('pt-BR')}</TableCell>
-                          <TableCell>{getStatusBadge(despesa.statusCobranca, 'cobranca')}</TableCell>
-                          <TableCell>{despesa.observacoes || '-'}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
+                    ))}
+                  </TableBody>
+                </Table>
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="historico" className="space-y-6">
+          <TabsContent value="historico">
             <Card>
-              <CardHeader>
-                <CardTitle>Histórico do evento</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {historico.map((item, index) => (
-                    <div key={index} className="flex gap-4 pb-4 border-b border-border last:border-0">
-                      <div className="flex-shrink-0 w-24 text-sm text-muted-foreground">
-                        {new Date(item.data).toLocaleDateString('pt-BR')}
-                      </div>
-                      <div className="flex-1">
-                        <Badge variant="outline" className="mb-2">{item.tipo}</Badge>
-                        <p className="text-foreground mb-1">{item.descricao}</p>
-                        <p className="text-sm text-muted-foreground">{item.responsavel}</p>
-                      </div>
+              <CardHeader><CardTitle>Histórico</CardTitle></CardHeader>
+              <CardContent className="space-y-3">
+                {historico.map((item) => (
+                  <div key={`${item.data}-${item.acao}`} className="rounded-md border border-border p-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="font-medium">{item.acao}</p>
+                      <p className="text-xs text-muted-foreground">{item.data}</p>
                     </div>
-                  ))}
-                </div>
+                    <p className="text-sm text-muted-foreground">Responsável: {item.responsavel}</p>
+                  </div>
+                ))}
               </CardContent>
             </Card>
           </TabsContent>

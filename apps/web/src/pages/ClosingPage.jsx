@@ -1,155 +1,187 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Eye, FileCheck, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
+import { Eye, FileCheck, CheckCircle2, AlertCircle, Clock, CircleDollarSign } from 'lucide-react';
 
 function ClosingPage() {
   const metrics = [
-    { title: 'Eventos em Fechamento', value: '4', icon: Clock, color: 'text-warning' },
-    { title: 'Vistorias Pendentes', value: '2', icon: AlertCircle, color: 'text-destructive' },
-    { title: 'Danos Registrados', value: '5', icon: FileCheck, color: 'text-warning' },
-    { title: 'Despesas Não Cobradas', value: 'R$ 12.500', icon: AlertCircle, color: 'text-destructive' },
-    { title: 'Notas de Débito Pendentes', value: '3', icon: FileCheck, color: 'text-warning' },
-    { title: 'Fechamentos Concluídos', value: '18', icon: CheckCircle2, color: 'text-success' },
+    { title: 'Eventos em fechamento', value: '4', icon: Clock, color: 'text-warning' },
+    { title: 'Vistorias pendentes', value: '2', icon: AlertCircle, color: 'text-destructive' },
+    { title: 'Danos/avarias registrados', value: '5', icon: FileCheck, color: 'text-warning' },
+    { title: 'Despesas não cobradas', value: 'R$ 12.500', icon: AlertCircle, color: 'text-destructive' },
+    { title: 'Notas de débito pendentes', value: '3', icon: FileCheck, color: 'text-warning' },
+    { title: 'Fechamentos concluídos', value: '18', icon: CheckCircle2, color: 'text-success' },
+    { title: 'Valores aguardando pagamento', value: 'R$ 22.400', icon: CircleDollarSign, color: 'text-destructive' },
   ];
 
   const closingEvents = [
     {
       id: 1,
-      evento: 'Feira Construir SC 2026',
-      empresa: 'Feira Construir SC',
-      data: '2026-06-20',
+      eventoLocatario: 'Feira Construir SC 2026 / Feira Construir SC Ltda.',
+      dataTermino: '20/06/2026',
       vistoria: 'Concluída',
-      danos: 'R$ 3.500',
-      despesas: 'R$ 8.200',
-      notaDebito: 'Pendente',
-      status: 'Em andamento'
+      termoDevolucao: 'Pendente de assinatura',
+      danosAvarias: 'R$ 3.500',
+      despesasAdicionais: 'R$ 8.200',
+      notaDebito: 'Emitida',
+      prazoPagamento: '05/07/2026',
+      statusGeral: 'Aguardando pagamento',
     },
     {
       id: 2,
-      evento: 'Congresso Saúde e Tecnologia',
-      empresa: 'Associação Médica Regional',
-      data: '2026-06-18',
+      eventoLocatario: 'Congresso Saúde e Tecnologia / Associação Médica Regional',
+      dataTermino: '18/06/2026',
       vistoria: 'Pendente',
-      danos: '-',
-      despesas: '-',
+      termoDevolucao: 'Não iniciado',
+      danosAvarias: 'R$ 0',
+      despesasAdicionais: 'R$ 0',
       notaDebito: 'Não iniciada',
-      status: 'Atrasado'
+      prazoPagamento: '03/07/2026',
+      statusGeral: 'Atrasado',
     },
     {
       id: 3,
-      evento: 'Expo Turismo Litoral',
-      empresa: 'Expo Turismo Litoral Eventos',
-      data: '2026-06-15',
+      eventoLocatario: 'Expo Turismo Litoral / Expo Turismo Eventos',
+      dataTermino: '15/06/2026',
       vistoria: 'Concluída',
-      danos: 'R$ 0',
-      despesas: 'R$ 4.300',
+      termoDevolucao: 'Assinado',
+      danosAvarias: 'R$ 1.100',
+      despesasAdicionais: 'R$ 4.300',
       notaDebito: 'Emitida',
-      status: 'Aguardando Pgto'
-    }
+      prazoPagamento: '30/06/2026',
+      statusGeral: 'Em conferência',
+    },
   ];
 
-  const checklists = [
-    { task: 'Vistoria Concluída', status: 'completed' },
-    { task: 'Termo de Devolução Assinado', status: 'completed' },
-    { task: 'Danos Registrados', status: 'completed' },
-    { task: 'Despesas Pós-Evento Lançadas', status: 'in-progress' },
-    { task: 'Nota de Débito Emitida', status: 'pending' },
-    { task: 'Acompanhamento de Pagamento', status: 'pending' },
-    { task: 'Encerramento Final', status: 'pending' },
+  const categoriasDespesas = [
+    'Energia elétrica',
+    'Ar-condicionado',
+    'Internet',
+    'Ponto de energia',
+    'Ponto de água',
+    'Horas excedentes',
+    'Limpeza',
+    'Segurança',
+    'Ambulância',
+    'Gerador',
+    'Hidráulica',
+    'Danos/avarias',
+    'Materiais não retirados',
+    'Outros',
   ];
 
   const getStatusBadge = (status) => {
     switch (status) {
       case 'Concluída':
       case 'Emitida':
-        return <Badge className="badge-status-green">{status}</Badge>;
-      case 'Em andamento':
-      case 'Aguardando Pgto':
+      case 'Assinado':
+        return <Badge className="badge-status-green text-xs px-2 py-0.5">{status}</Badge>;
+      case 'Em conferência':
+      case 'Conferência':
+      case 'Pendente de assinatura':
+      case 'Termo pendente':
+      case 'Aguardando pagamento':
+      case 'Aguard. pagto.':
       case 'Pendente':
-        return <Badge className="badge-status-yellow">{status}</Badge>;
+        return <Badge className="badge-status-yellow text-xs px-2 py-0.5">{status}</Badge>;
       case 'Atrasado':
       case 'Não iniciada':
-        return <Badge className="badge-status-red">{status}</Badge>;
+      case 'Não iniciado':
+        return <Badge className="badge-status-red text-xs px-2 py-0.5">{status}</Badge>;
       default:
-        return <Badge className="badge-status-neutral">{status}</Badge>;
+        return <Badge className="badge-status-neutral text-xs px-2 py-0.5">{status}</Badge>;
     }
   };
 
-  const renderChecklistIcon = (status) => {
-    switch(status) {
-      case 'completed': return <CheckCircle2 className="h-5 w-5 text-success" />;
-      case 'in-progress': return <Clock className="h-5 w-5 text-warning" />;
-      case 'pending': return <AlertCircle className="h-5 w-5 text-muted-foreground opacity-50" />;
-      default: return null;
-    }
+  const getShortStatus = (status) => {
+    if (status === 'Pendente de assinatura') return 'Termo pendente';
+    if (status === 'Aguardando pagamento') return 'Aguard. pagto.';
+    if (status === 'Em conferência') return 'Conferência';
+    return status;
   };
 
   return (
     <>
       <Helmet>
-        <title>{`Fechamento Pós-Evento - Expocentro Gestão 360`}</title>
+        <title>Fechamento Pós-Evento - Expocentro Gestão 360</title>
       </Helmet>
-      
+
       <div className="space-y-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight mb-2">Fechamento Pós-Evento</h1>
-            <p className="text-muted-foreground">Controle de avarias, repasse de despesas e encerramento operacional</p>
-          </div>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight mb-2">Fechamento Pós-Evento</h1>
+          <p className="text-muted-foreground">Conferência final de vistoria, despesas e encerramento financeiro por evento</p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-          {metrics.map((metric, i) => (
-            <Card key={i} className="shadow-sm">
+        <Card className="shadow-sm bg-muted/20">
+          <CardContent className="p-4">
+            <p className="text-sm text-muted-foreground">Prazo de pagamento da nota de débito: 15 dias</p>
+          </CardContent>
+        </Card>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+          {metrics.map((metric) => (
+            <Card key={metric.title} className="shadow-sm">
               <CardContent className="p-4 flex flex-col items-start gap-2">
                 <div className="flex items-center gap-2">
                   <metric.icon className={`h-4 w-4 ${metric.color}`} />
-                  <span className="text-xs font-medium text-muted-foreground leading-none">{metric.title}</span>
+                  <span className="text-xs font-medium text-muted-foreground leading-tight">{metric.title}</span>
                 </div>
-                <span className="text-2xl font-bold tabular-nums">{metric.value}</span>
+                <span className="text-xl font-bold tabular-nums">{metric.value}</span>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Card className="lg:col-span-2 shadow-sm">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+          <Card className="xl:col-span-3 shadow-sm">
             <CardHeader>
-              <CardTitle>Eventos em Fechamento</CardTitle>
+              <CardTitle>Eventos em fechamento</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-muted/50">
-                    <TableHead>Evento / Empresa</TableHead>
-                    <TableHead>Data Fim</TableHead>
-                    <TableHead>Vistoria</TableHead>
-                    <TableHead>Danos & Despesas</TableHead>
-                    <TableHead>Status Geral</TableHead>
-                    <TableHead className="text-right">Ações</TableHead>
+              <Table className="w-full table-fixed text-[12.5px] md:text-[13px]" noHorizontalScroll>
+                <TableHeader className="bg-muted/30">
+                  <TableRow>
+                    <TableHead className="w-[28%] text-[11px] uppercase tracking-wide">Evento / locatário</TableHead>
+                    <TableHead className="hidden xl:table-cell w-[10%] text-[11px] uppercase tracking-wide">Término</TableHead>
+                    <TableHead className="w-[17%] text-[11px] uppercase tracking-wide">Vistoria e termo</TableHead>
+                    <TableHead className="w-[22%] text-[11px] uppercase tracking-wide">Financeiro pós-evento</TableHead>
+                    <TableHead className="hidden 2xl:table-cell w-[10%] text-[11px] uppercase tracking-wide">Prazo pagto.</TableHead>
+                    <TableHead className="w-[10%] text-[11px] uppercase tracking-wide">Situação</TableHead>
+                    <TableHead className="w-[3%] text-right text-[11px] uppercase tracking-wide">Ações</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {closingEvents.map((evt) => (
-                    <TableRow key={evt.id} className="table-row-tall">
-                      <TableCell>
-                        <div className="font-semibold text-foreground">{evt.evento}</div>
-                        <div className="text-xs text-muted-foreground">{evt.empresa}</div>
+                    <TableRow key={evt.id} className="table-row-tall h-auto align-top">
+                      <TableCell className="py-5">
+                        <div className="font-semibold text-sm leading-tight break-words">{evt.eventoLocatario.split(' / ')[0]}</div>
+                        <div className="text-[11px] text-muted-foreground mt-1 leading-tight break-words">{evt.eventoLocatario.split(' / ')[1]}</div>
+                        <div className="xl:hidden text-[11px] text-muted-foreground mt-1">Término: {evt.dataTermino}</div>
                       </TableCell>
-                      <TableCell>{new Date(evt.data).toLocaleDateString('pt-BR')}</TableCell>
-                      <TableCell>{getStatusBadge(evt.vistoria)}</TableCell>
-                      <TableCell>
-                        <div className="text-sm">D: {evt.danos}</div>
-                        <div className="text-sm">E: {evt.despesas}</div>
+                      <TableCell className="hidden xl:table-cell py-5">{evt.dataTermino}</TableCell>
+                      <TableCell className="py-5 space-y-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] text-muted-foreground">Vistoria</span>
+                          {getStatusBadge(evt.vistoria)}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] text-muted-foreground">Termo</span>
+                          {getStatusBadge(getShortStatus(evt.termoDevolucao))}
+                        </div>
                       </TableCell>
-                      <TableCell>{getStatusBadge(evt.status)}</TableCell>
-                      <TableCell className="text-right">
-                        <Button variant="ghost" size="icon">
+                      <TableCell className="py-5">
+                        <div className="text-sm leading-tight break-words">Danos: {evt.danosAvarias}</div>
+                        <div className="text-sm leading-tight break-words">Despesas: {evt.despesasAdicionais}</div>
+                        <div className="mt-1">{getStatusBadge(getShortStatus(evt.notaDebito))}</div>
+                        <div className="2xl:hidden text-[11px] text-muted-foreground mt-1">Prazo: {evt.prazoPagamento}</div>
+                      </TableCell>
+                      <TableCell className="hidden 2xl:table-cell py-5">{evt.prazoPagamento}</TableCell>
+                      <TableCell className="py-5">{getStatusBadge(getShortStatus(evt.statusGeral))}</TableCell>
+                      <TableCell className="text-right py-5">
+                        <Button variant="ghost" size="icon" className="h-8 w-8" title="Ver detalhes">
                           <Eye className="h-4 w-4" />
                         </Button>
                       </TableCell>
@@ -160,18 +192,15 @@ function ClosingPage() {
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm bg-muted/20">
+          <Card className="shadow-sm">
             <CardHeader>
-              <CardTitle>Checklist de Fechamento Padrão</CardTitle>
+              <CardTitle>Categorias de despesas pós-evento</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {checklists.map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    {renderChecklistIcon(item.status)}
-                    <span className={`text-sm ${item.status === 'pending' ? 'text-muted-foreground' : 'font-medium text-foreground'}`}>
-                      {item.task}
-                    </span>
+              <div className="space-y-2">
+                {categoriasDespesas.map((item) => (
+                  <div key={item} className="rounded-md border border-border bg-muted/20 px-3 py-2 text-sm">
+                    {item}
                   </div>
                 ))}
               </div>

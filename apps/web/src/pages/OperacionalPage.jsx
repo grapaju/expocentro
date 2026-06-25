@@ -1,51 +1,144 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Calendar, PlayCircle, Flag, Clock } from 'lucide-react';
+import { CalendarCheck, Hammer, PlayCircle, Truck, Flag } from 'lucide-react';
 
 function OperacionalPage() {
-  const checklists = {
-    before: [
-      { task: 'Contrato Assinado', status: 'completed', resp: 'Jurídico', date: '01/06/2026' },
-      { task: 'Regulamento Entregue', status: 'completed', resp: 'Comercial', date: '05/06/2026' },
-      { task: 'Termo Responsabilidade Assinado', status: 'completed', resp: 'Jurídico', date: '06/06/2026' },
-      { task: 'Reunião Técnica Realizada', status: 'pending', resp: 'Operacional', date: '10/06/2026' },
-      { task: 'Energia/Demanda Informada', status: 'overdue', resp: 'Locatário', date: '08/06/2026' },
-    ],
-    during: [
-      { task: 'Acompanhamento Montagem', status: 'pending', resp: 'Operacional', date: '14/07/2026' },
-      { task: 'Liberação do Espaço', status: 'pending', resp: 'Operacional', date: '14/07/2026' },
-      { task: 'Controle Horas Extras', status: 'pending', resp: 'Operacional', date: '15/07/2026' },
-    ],
-    after: [
-      { task: 'Vistoria Concluída', status: 'pending', resp: 'Operacional', date: '19/07/2026' },
-      { task: 'Registro de Avarias', status: 'pending', resp: 'Manutenção', date: '19/07/2026' },
-      { task: 'Lançamento Despesas', status: 'pending', resp: 'Financeiro', date: '20/07/2026' },
-    ]
-  };
+  const fases = [
+    {
+      id: 'pre',
+      titulo: 'Pré-evento',
+      icon: CalendarCheck,
+      color: 'border-t-primary',
+      itens: [
+        'Contrato assinado',
+        'Regulamento técnico entregue',
+        'Normas de montagem/desmontagem entregues',
+        'Termo de responsabilidade assinado',
+        'Caução definida',
+        'Reunião técnica realizada',
+        'Espaços confirmados',
+        'Período de montagem confirmado',
+        'Período de desmontagem confirmado',
+        'Horários contratados confirmados',
+        'Serviços adicionais definidos',
+        'Internet definida',
+        'Energia/demanda informada',
+        'Ar-condicionado definido',
+        'Segurança definida',
+        'Limpeza definida',
+        'Controle de acesso definido',
+      ],
+    },
+    {
+      id: 'montagem',
+      titulo: 'Montagem',
+      icon: Hammer,
+      color: 'border-t-warning',
+      itens: [
+        'Equipe identificada',
+        'Uso de EPI orientado',
+        'Proibição de crianças nos pavilhões informada',
+        'Proibição de entrada sem calçado adequado informada',
+        'Fumódromo orientado',
+        'Proibição de serrar, lixar e pintar nos pavilhões/salas informada',
+        'Corredores desobstruídos',
+        'Portas de emergência desobstruídas',
+        'Painéis elétricos desobstruídos',
+        'Ligações elétricas autorizadas',
+        'Andaimes com rodinhas',
+        'Proibição de fixar materiais nas paredes informada',
+        'Limpeza de materiais somente em local apropriado',
+        'Permanência limitada ao horário contratado',
+      ],
+    },
+    {
+      id: 'durante',
+      titulo: 'Durante o evento',
+      icon: PlayCircle,
+      color: 'border-t-primary',
+      itens: [
+        'Liberação do espaço',
+        'Acompanhamento operacional',
+        'Registro de ocorrências',
+        'Controle de horas excedentes',
+        'Solicitações extras registradas',
+        'Suporte técnico acompanhado',
+        'Consumo de energia acompanhado',
+        'Controle de acesso acompanhado',
+      ],
+    },
+    {
+      id: 'desmontagem',
+      titulo: 'Desmontagem',
+      icon: Truck,
+      color: 'border-t-muted-foreground',
+      itens: [
+        'Horário de desmontagem respeitado',
+        'Retirada de materiais acompanhada',
+        'Corredores e saídas liberados',
+        'Vistoria inicial realizada',
+        'Registro de danos/avarias',
+        'Materiais esquecidos registrados',
+        'Espaço liberado para vistoria final',
+      ],
+    },
+    {
+      id: 'pos',
+      titulo: 'Pós-evento',
+      icon: Flag,
+      color: 'border-t-success',
+      itens: [
+        'Vistoria final realizada',
+        'Termo de devolução assinado',
+        'Avarias registradas',
+        'Despesas adicionais lançadas',
+        'Nota de débito emitida',
+        'Prazo de pagamento acompanhado',
+        'Fechamento financeiro concluído',
+        'Encerramento operacional concluído',
+      ],
+    },
+  ];
 
-  const getStatusVisual = (status) => {
-    switch (status) {
-      case 'completed': return { checked: true, color: 'text-success line-through' };
-      case 'overdue': return { checked: false, color: 'text-destructive font-medium' };
-      default: return { checked: false, color: 'text-foreground' };
-    }
-  };
+  const completed = new Set([
+    'Contrato assinado',
+    'Regulamento técnico entregue',
+    'Normas de montagem/desmontagem entregues',
+    'Termo de responsabilidade assinado',
+    'Caução definida',
+    'Reunião técnica realizada',
+    'Espaços confirmados',
+    'Período de montagem confirmado',
+    'Período de desmontagem confirmado',
+    'Horários contratados confirmados',
+    'Serviços adicionais definidos',
+    'Energia/demanda informada',
+    'Controle de acesso definido',
+    'Equipe identificada',
+    'Uso de EPI orientado',
+    'Corredores desobstruídos',
+    'Portas de emergência desobstruídas',
+    'Painéis elétricos desobstruídos',
+    'Ligações elétricas autorizadas',
+    'Liberação do espaço',
+    'Acompanhamento operacional',
+    'Registro de ocorrências',
+  ]);
 
   return (
     <>
       <Helmet>
-        <title>Operacional - Expocentro</title>
+        <title>Controle Operacional - Expocentro</title>
       </Helmet>
 
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight mb-2">Controle Operacional</h1>
-          <p className="text-muted-foreground">Checklists de execução por fases do evento</p>
+          <p className="text-muted-foreground">Checklist real baseado no regulamento técnico e normas de montagem/desmontagem</p>
         </div>
 
         <Card className="shadow-sm border-border bg-muted/20">
@@ -56,112 +149,67 @@ function OperacionalPage() {
                 <SelectTrigger className="bg-card"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="feira-sc">Feira Construir SC 2026</SelectItem>
-                  <SelectItem value="congresso">Congresso Saúde</SelectItem>
+                  <SelectItem value="congresso">Congresso Saúde e Tecnologia</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="flex-1">
-              <label className="text-xs font-medium text-muted-foreground mb-1 block">Responsável</label>
+              <label className="text-xs font-medium text-muted-foreground mb-1 block">Fase</label>
               <Select defaultValue="all">
-                <SelectTrigger className="bg-card"><SelectValue placeholder="Todos" /></SelectTrigger>
-                <SelectContent><SelectItem value="all">Todos</SelectItem></SelectContent>
+                <SelectTrigger className="bg-card"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todas</SelectItem>
+                  <SelectItem value="pre">Pré-evento</SelectItem>
+                  <SelectItem value="montagem">Montagem</SelectItem>
+                  <SelectItem value="durante">Durante o evento</SelectItem>
+                  <SelectItem value="desmontagem">Desmontagem</SelectItem>
+                  <SelectItem value="pos">Pós-evento</SelectItem>
+                </SelectContent>
               </Select>
             </div>
             <div className="flex-1">
-              <label className="text-xs font-medium text-muted-foreground mb-1 block">Prazo</label>
+              <label className="text-xs font-medium text-muted-foreground mb-1 block">Situação</label>
               <Select defaultValue="all">
-                <SelectTrigger className="bg-card"><SelectValue placeholder="Qualquer prazo" /></SelectTrigger>
-                <SelectContent><SelectItem value="all">Qualquer prazo</SelectItem></SelectContent>
+                <SelectTrigger className="bg-card"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos</SelectItem>
+                  <SelectItem value="done">Concluídos</SelectItem>
+                  <SelectItem value="open">Pendentes</SelectItem>
+                </SelectContent>
               </Select>
             </div>
           </CardContent>
         </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Card className="shadow-sm border-t-4 border-t-primary">
-            <CardHeader className="bg-muted/10 border-b border-border py-4">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-primary" />
-                PRÉ-EVENTO
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <div className="divide-y divide-border">
-                {checklists.before.map((item, i) => {
-                  const visual = getStatusVisual(item.status);
-                  return (
-                    <div key={i} className="p-4 flex items-start gap-3 hover:bg-muted/30 transition-colors">
-                      <Checkbox checked={visual.checked} className="mt-1" />
-                      <div className="flex-1">
-                        <p className={`text-sm ${visual.color}`}>{item.task}</p>
-                        <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
-                          <span>Resp: {item.resp}</span>
-                          <span className="flex items-center gap-1"><Clock className="h-3 w-3"/> {item.date}</span>
-                        </div>
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          {fases.map((fase) => (
+            <Card key={fase.id} className={`shadow-sm border-t-4 ${fase.color}`}>
+              <CardHeader className="py-4 border-b border-border bg-muted/10">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <fase.icon className="h-5 w-5" />
+                  {fase.titulo}
+                  <Badge variant="outline" className="ml-auto">
+                    {fase.itens.filter((item) => completed.has(item)).length}/{fase.itens.length}
+                  </Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <div className="divide-y divide-border">
+                  {fase.itens.map((item) => {
+                    const done = completed.has(item);
+                    return (
+                      <div key={item} className="p-3 flex items-center gap-3 hover:bg-muted/20">
+                        <Checkbox checked={done} />
+                        <p className={`text-sm ${done ? 'text-foreground line-through' : 'text-foreground'}`}>
+                          {item}
+                        </p>
                       </div>
-                      {item.status === 'overdue' && <Badge className="badge-status-red text-[10px] px-1.5 py-0">Atrasado</Badge>}
-                    </div>
-                  )
-                })}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="shadow-sm border-t-4 border-t-warning">
-            <CardHeader className="bg-muted/10 border-b border-border py-4">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <PlayCircle className="h-5 w-5 text-warning" />
-                DURANTE O EVENTO
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <div className="divide-y divide-border">
-                {checklists.during.map((item, i) => {
-                  const visual = getStatusVisual(item.status);
-                  return (
-                    <div key={i} className="p-4 flex items-start gap-3 hover:bg-muted/30 transition-colors">
-                      <Checkbox checked={visual.checked} className="mt-1" />
-                      <div className="flex-1">
-                        <p className={`text-sm ${visual.color}`}>{item.task}</p>
-                        <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
-                          <span>Resp: {item.resp}</span>
-                          <span className="flex items-center gap-1"><Clock className="h-3 w-3"/> {item.date}</span>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="shadow-sm border-t-4 border-t-muted-foreground">
-            <CardHeader className="bg-muted/10 border-b border-border py-4">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Flag className="h-5 w-5 text-muted-foreground" />
-                PÓS-EVENTO
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <div className="divide-y divide-border">
-                {checklists.after.map((item, i) => {
-                  const visual = getStatusVisual(item.status);
-                  return (
-                    <div key={i} className="p-4 flex items-start gap-3 hover:bg-muted/30 transition-colors">
-                      <Checkbox checked={visual.checked} className="mt-1" />
-                      <div className="flex-1">
-                        <p className={`text-sm ${visual.color}`}>{item.task}</p>
-                        <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
-                          <span>Resp: {item.resp}</span>
-                          <span className="flex items-center gap-1"><Clock className="h-3 w-3"/> {item.date}</span>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </CardContent>
-          </Card>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </>

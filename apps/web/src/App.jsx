@@ -12,6 +12,7 @@ import AgendaComercialPage from './pages/AgendaComercialPage.jsx';
 import EventosPage from './pages/EventosPage.jsx';
 import EventoDetalhePage from './pages/EventoDetalhePage.jsx';
 import PropostasContratosPage from './pages/PropostasContratosPage.jsx';
+import ContratoDetalhePage from './pages/ContratoDetalhePage.jsx';
 import FinanceiroPage from './pages/FinanceiroPage.jsx';
 import OperacionalPage from './pages/OperacionalPage.jsx';
 import ClosingPage from './pages/ClosingPage.jsx';
@@ -42,6 +43,7 @@ function App() {
                     <Route path="/eventos" element={<EventosPage />} />
                     <Route path="/eventos/:id" element={<EventoDetalhePage />} />
                     <Route path="/propostas-contratos" element={<PropostasContratosPage />} />
+                    <Route path="/propostas-contratos/:id" element={<ContratoDetalhePage />} />
                     <Route path="/financeiro" element={<FinanceiroPage />} />
                     <Route path="/operacional" element={<OperacionalPage />} />
                     <Route path="/closing" element={<ClosingPage />} />

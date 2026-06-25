@@ -211,7 +211,7 @@ function EmpresaDetalhePage() {
                     <p className="text-foreground">{empresa.origemContato}</p>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-1">Status comercial</p>
+                    <p className="text-sm font-medium text-muted-foreground mb-1">Situação comercial</p>
                     <Badge variant="default">{empresa.statusComercial}</Badge>
                   </div>
                   <div className="md:col-span-2">
@@ -239,7 +239,7 @@ function EmpresaDetalhePage() {
                         <TableHead>Resumo</TableHead>
                         <TableHead>Próxima ação</TableHead>
                         <TableHead>Data de retorno</TableHead>
-                        <TableHead>Status do retorno</TableHead>
+                        <TableHead>Situação do retorno</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -274,7 +274,7 @@ function EmpresaDetalhePage() {
                         <TableHead>Nome</TableHead>
                         <TableHead>Data</TableHead>
                         <TableHead>Espaço</TableHead>
-                        <TableHead>Status</TableHead>
+                        <TableHead>Situação</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -307,7 +307,7 @@ function EmpresaDetalhePage() {
                         <TableHead>Tipo</TableHead>
                         <TableHead>Data</TableHead>
                         <TableHead>Valor</TableHead>
-                        <TableHead>Status</TableHead>
+                        <TableHead>Situação</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>

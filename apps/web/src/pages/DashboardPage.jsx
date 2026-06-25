@@ -13,58 +13,62 @@ import {
 
 function DashboardPage() {
   const handleExport = () => {
-    toast.success("Executive Summary exported to PDF.");
+    toast.success('Resumo executivo exportado em PDF.');
   };
 
   const nextEvents = [
     {
       evento: 'Feira Construir SC 2026',
       empresa: 'Feira Construir SC',
+      espacoLocado: 'Pavilhão Norte',
       data: '2026-07-15',
-      financialStatus: 'Paid',
-      mainPending: 'Operational Checklist'
+      financialStatus: 'Pago',
+      mainPending: 'Checklist operacional'
     },
     {
       evento: 'Congresso Saúde e Tecnologia',
       empresa: 'Associação Médica',
+      espacoLocado: 'Torre Norte',
       data: '2026-07-28',
-      financialStatus: 'Partial',
-      mainPending: 'Awaiting Payment'
+      financialStatus: 'Parcial',
+      mainPending: 'Aguardando pagamento'
     },
     {
       evento: 'Expo Turismo Litoral',
       empresa: 'Expo Turismo Eventos',
+      espacoLocado: 'Pavilhão Sul',
       data: '2026-08-10',
-      financialStatus: 'Open',
-      mainPending: 'Pending Contract'
+      financialStatus: 'Em aberto',
+      mainPending: 'Contrato pendente'
     },
     {
       evento: 'Formatura Medicina 2026',
       empresa: 'Formaturas Premium',
+      espacoLocado: 'Auditório Torre 1',
       data: '2026-08-22',
-      financialStatus: 'Partial',
-      mainPending: 'Technical Meeting'
+      financialStatus: 'Parcial',
+      mainPending: 'Reunião técnica pendente'
     },
   ];
 
   const getBadgeForFinancial = (status) => {
     switch (status) {
-      case 'Paid': return <Badge className="badge-status-green">Pago</Badge>;
-      case 'Partial': return <Badge className="badge-status-yellow">Parcial</Badge>;
-      case 'Overdue': return <Badge className="badge-status-red">Atrasado</Badge>;
-      case 'Open': return <Badge className="badge-status-neutral">Em Aberto</Badge>;
+      case 'Pago': return <Badge className="badge-status-green">Pago</Badge>;
+      case 'Parcial': return <Badge className="badge-status-yellow">Parcial</Badge>;
+      case 'Atrasado': return <Badge className="badge-status-red">Atrasado</Badge>;
+      case 'Em aberto': return <Badge className="badge-status-neutral">Em aberto</Badge>;
       default: return <Badge className="badge-status-neutral">{status}</Badge>;
     }
   };
 
   const getBadgeForPending = (status) => {
     switch (status) {
-      case 'Awaiting Payment': 
-      case 'Pending Contract': 
-      case 'Post-Event Closing':
+      case 'Aguardando pagamento':
+      case 'Contrato pendente':
+      case 'Fechamento pós-evento':
         return <Badge className="badge-status-red text-xs">{status}</Badge>;
-      case 'Operational Checklist':
-      case 'Technical Meeting':
+      case 'Checklist operacional':
+      case 'Reunião técnica pendente':
         return <Badge className="badge-status-yellow text-xs">{status}</Badge>;
       default:
         return <Badge className="badge-status-green text-xs">{status}</Badge>;
@@ -82,6 +86,9 @@ function DashboardPage() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight mb-2">Painel Executivo</h1>
             <p className="text-muted-foreground">Indicadores e controle de riscos do Expocentro Balneário Camboriú</p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Estrutura modelada com base nos contratos, regulamento técnico, normas de montagem/desmontagem e fluxo operacional real do Expocentro.
+            </p>
           </div>
           
           <div className="flex items-center gap-3">
@@ -104,6 +111,26 @@ function DashboardPage() {
             </Button>
           </div>
         </div>
+
+        <section>
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
+            {[
+              { label: 'Receita prevista', val: 'R$ 2,85 mi' },
+              { label: 'Receita recebida', val: 'R$ 1,92 mi' },
+              { label: 'Saldo pendente', val: 'R$ 924,1 mil', danger: true },
+              { label: 'Despesas pós-evento', val: 'R$ 187,3 mil' },
+              { label: 'Eventos confirmados', val: '23' },
+              { label: 'Contratos pendentes', val: '5', danger: true },
+            ].map((item, i) => (
+              <Card key={i} className="shadow-sm">
+                <CardContent className="p-4">
+                  <p className="text-xs font-medium text-muted-foreground mb-2">{item.label}</p>
+                  <p className={`text-2xl font-bold tabular-nums ${item.danger ? 'text-destructive' : 'text-foreground'}`}>{item.val}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
 
         <section className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
           <div className="bg-muted/50 p-4 border-b border-border">
@@ -138,9 +165,10 @@ function DashboardPage() {
                     <TableRow className="bg-muted/20">
                       <TableHead>Evento</TableHead>
                       <TableHead>Empresa</TableHead>
+                      <TableHead>Espaço Locado</TableHead>
                       <TableHead>Data</TableHead>
-                      <TableHead>Status Financeiro</TableHead>
-                      <TableHead>Pendência Principal</TableHead>
+                      <TableHead>Situação financeira</TableHead>
+                      <TableHead>Pendência-chave</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -148,6 +176,7 @@ function DashboardPage() {
                       <TableRow key={index} className="table-row-tall">
                         <TableCell className="font-semibold text-foreground">{evento.evento}</TableCell>
                         <TableCell>{evento.empresa}</TableCell>
+                        <TableCell>{evento.espacoLocado}</TableCell>
                         <TableCell>{new Date(evento.data).toLocaleDateString('pt-BR')}</TableCell>
                         <TableCell>{getBadgeForFinancial(evento.financialStatus)}</TableCell>
                         <TableCell>{getBadgeForPending(evento.mainPending)}</TableCell>

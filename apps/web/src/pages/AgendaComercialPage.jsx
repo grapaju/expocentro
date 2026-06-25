@@ -61,18 +61,18 @@ function AgendaComercialPage() {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'Para Hoje': return <Badge className="badge-status-yellow">Para Hoje</Badge>;
-      case 'Atrasado': return <Badge className="badge-status-red">Atrasado</Badge>;
-      case 'Concluído': return <Badge className="badge-status-green">Concluído</Badge>;
-      default: return <Badge className="badge-status-neutral">{status}</Badge>;
+      case 'Para Hoje': return <Badge className="badge-status-yellow text-xs px-2 py-0.5">Hoje</Badge>;
+      case 'Atrasado': return <Badge className="badge-status-red text-xs px-2 py-0.5">Atrasado</Badge>;
+      case 'Concluído': return <Badge className="badge-status-green text-xs px-2 py-0.5">Concluído</Badge>;
+      default: return <Badge className="badge-status-neutral text-xs px-2 py-0.5">Pendente</Badge>;
     }
   };
 
   const getPriorityBadge = (priority) => {
     switch (priority) {
-      case 'Urgente': return <Badge variant="destructive">{priority}</Badge>;
-      case 'Alta': return <Badge className="bg-primary hover:bg-primary">{priority}</Badge>;
-      default: return <Badge variant="outline">{priority}</Badge>;
+      case 'Urgente': return <Badge variant="destructive" className="text-xs px-2 py-0.5">Urgente</Badge>;
+      case 'Alta': return <Badge className="bg-primary hover:bg-primary text-xs px-2 py-0.5">Alta</Badge>;
+      default: return <Badge variant="outline" className="text-xs px-2 py-0.5">{priority}</Badge>;
     }
   };
 
@@ -95,7 +95,7 @@ function AgendaComercialPage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold tracking-tight mb-2">Central de Atividades</h1>
-            <p className="text-muted-foreground">Acompanhamento e registro de interações comerciais</p>
+            <p className="text-muted-foreground">Prioridades comerciais, próximos retornos e follow-ups críticos</p>
           </div>
           <Button onClick={() => toast("Modal de registro em breve.")} className="gap-2 shadow-md" size="lg">
             <Plus className="h-5 w-5" />
@@ -119,31 +119,38 @@ function AgendaComercialPage() {
 
         <Card className="shadow-sm">
           <CardContent className="p-0">
-            <Table>
+            <Table className="w-full table-fixed text-[12.5px] md:text-[13px]" noHorizontalScroll>
               <TableHeader className="bg-muted/30">
                 <TableRow>
-                  <TableHead className="pl-6">Empresa</TableHead>
-                  <TableHead>Pessoa de Contato</TableHead>
-                  <TableHead>Data Contato</TableHead>
-                  <TableHead>Próxima Ação</TableHead>
-                  <TableHead>Data Retorno</TableHead>
-                  <TableHead>Prioridade</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Ações</TableHead>
+                  <TableHead className="pl-6 w-[24%] text-[11px] uppercase tracking-wide">Empresa</TableHead>
+                  <TableHead className="w-[16%] text-[11px] uppercase tracking-wide">Contato</TableHead>
+                  <TableHead className="hidden xl:table-cell w-[12%] text-[11px] uppercase tracking-wide">Data contato</TableHead>
+                  <TableHead className="w-[24%] text-[11px] uppercase tracking-wide">Próxima ação comercial</TableHead>
+                  <TableHead className="w-[10%] text-[11px] uppercase tracking-wide">Data retorno</TableHead>
+                  <TableHead className="w-[8%] text-[11px] uppercase tracking-wide">Prioridade</TableHead>
+                  <TableHead className="w-[10%] text-[11px] uppercase tracking-wide">Situação</TableHead>
+                  <TableHead className="w-[3%] text-right text-[11px] uppercase tracking-wide">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {agenda.map((item) => (
-                  <TableRow key={item.id} className={`table-row-tall ${getRowClass(item.status)}`}>
-                    <TableCell className="font-semibold pl-6">{item.empresa}</TableCell>
-                    <TableCell>{item.contato}</TableCell>
-                    <TableCell className="text-muted-foreground">{new Date(item.dataContato).toLocaleDateString('pt-BR')}</TableCell>
-                    <TableCell>{item.proximaAcao}</TableCell>
-                    <TableCell className="font-medium">{item.dataRetorno !== '-' ? new Date(item.dataRetorno).toLocaleDateString('pt-BR') : '-'}</TableCell>
-                    <TableCell>{getPriorityBadge(item.prioridade)}</TableCell>
-                    <TableCell>{getStatusBadge(item.status)}</TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="ghost" size="icon">
+                  <TableRow key={item.id} className={`table-row-tall h-auto align-top ${getRowClass(item.status)}`}>
+                    <TableCell className="font-semibold pl-6 py-5">
+                      <div className="text-sm leading-tight break-words">{item.empresa}</div>
+                      <div className="xl:hidden text-[11px] text-muted-foreground mt-1">Contato em {new Date(item.dataContato).toLocaleDateString('pt-BR')}</div>
+                    </TableCell>
+                    <TableCell className="py-5">
+                      <div className="leading-tight break-words">{item.contato}</div>
+                    </TableCell>
+                    <TableCell className="hidden xl:table-cell py-5 text-muted-foreground">{new Date(item.dataContato).toLocaleDateString('pt-BR')}</TableCell>
+                    <TableCell className="py-5">
+                      <div className="leading-tight break-words">{item.proximaAcao}</div>
+                    </TableCell>
+                    <TableCell className="font-medium py-5">{item.dataRetorno !== '-' ? new Date(item.dataRetorno).toLocaleDateString('pt-BR') : '-'}</TableCell>
+                    <TableCell className="py-5">{getPriorityBadge(item.prioridade)}</TableCell>
+                    <TableCell className="py-5">{getStatusBadge(item.status)}</TableCell>
+                    <TableCell className="text-right py-5">
+                      <Button variant="ghost" size="icon" className="h-8 w-8" title="Ver detalhes">
                         <Eye className="h-4 w-4" />
                       </Button>
                     </TableCell>

@@ -39,7 +39,7 @@ function Sidebar({ isOpen, onClose }) {
 
   const menuItems = [
     {
-      title: 'Dashboard',
+      title: 'Painel Executivo',
       icon: LayoutDashboard,
       path: '/dashboard',
       single: true,

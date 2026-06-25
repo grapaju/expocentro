@@ -16,24 +16,44 @@ function RelatoriosPage() {
 
   const reports = [
     {
-      title: 'Fechamento Mensal Consolidado',
-      desc: 'Receitas, despesas, repasses e resultado líquido por período.',
+      title: 'Relatório de contratos por tipo',
+      desc: 'Distribuição de contratos por modalidade: onerosa, não onerosa, IPTU e parcerias.',
     },
     {
-      title: 'Comparativo Anual (2025 x 2026)',
-      desc: 'Evolução de eventos, faturamento e inadimplência.',
+      title: 'Relatório de locações não onerosas',
+      desc: 'Consolidado de eventos, espaços e contrapartidas vinculadas a locações não onerosas.',
     },
     {
-      title: 'Performance de Receita por Espaço',
-      desc: 'Ocupação, rentabilidade e demanda de pavilhões e torres.',
+      title: 'Relatório de compensações de IPTU',
+      desc: 'Controle dos contratos com compensação de IPTU e status de validação.',
     },
     {
-      title: 'Despesas Pós-Evento Repassadas',
-      desc: 'Consolidado de categorias (Limpeza, Energia, Danos) por evento.',
+      title: 'Relatório de cauções e termos de responsabilidade',
+      desc: 'Situação de cauções, termos assinados e pendências por locatário.',
     },
     {
-      title: 'Relatório de Pendências Contratuais',
-      desc: 'Contratos não assinados, cauções e avarias pendentes.',
+      title: 'Relatório de notas de débito emitidas',
+      desc: 'Notas emitidas por evento com prazo e status de pagamento.',
+    },
+    {
+      title: 'Relatório de despesas pós-evento',
+      desc: 'Consolidação de energia, ar-condicionado, limpeza, segurança, avarias e demais categorias.',
+    },
+    {
+      title: 'Relatório de pendências operacionais',
+      desc: 'Pendências por fase: pré-evento, montagem, durante, desmontagem e pós-evento.',
+    },
+    {
+      title: 'Relatório de montagem e desmontagem',
+      desc: 'Conformidade com normas técnicas e acompanhamento dos horários contratados.',
+    },
+    {
+      title: 'Relatório de ocupação por espaço',
+      desc: 'Taxa de ocupação e recorrência por pavilhões, torres, auditórios e áreas de apoio.',
+    },
+    {
+      title: 'Relatório comparativo anual',
+      desc: 'Comparativo ano a ano de contratos, receitas, despesas e fechamento pós-evento.',
     },
   ];
 

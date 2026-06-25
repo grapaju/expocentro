@@ -54,10 +54,10 @@ function EmpresasPage() {
 
   const getStatusBadge = (status) => {
     switch(status) {
-      case 'Cliente Ativo': return <Badge className="badge-status-green">{status}</Badge>;
-      case 'Em negociação': return <Badge className="badge-status-yellow">{status}</Badge>;
-      case 'Sem contato recente': return <Badge className="badge-status-red">{status}</Badge>;
-      default: return <Badge className="badge-status-neutral">{status}</Badge>;
+      case 'Cliente Ativo': return <Badge className="badge-status-green text-xs px-2 py-0.5">Cliente ativo</Badge>;
+      case 'Em negociação': return <Badge className="badge-status-yellow text-xs px-2 py-0.5">Negociação</Badge>;
+      case 'Sem contato recente': return <Badge className="badge-status-red text-xs px-2 py-0.5">Sem contato</Badge>;
+      default: return <Badge className="badge-status-neutral text-xs px-2 py-0.5">Análise</Badge>;
     }
   };
 
@@ -105,7 +105,7 @@ function EmpresasPage() {
                   <TableHead>Próxima Ação</TableHead>
                   <TableHead>Data Retorno</TableHead>
                   <TableHead>Valor Histórico</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>Situação</TableHead>
                   <TableHead className="text-right">Ações</TableHead>
                 </TableRow>
               </TableHeader>

@@ -46,7 +46,7 @@ function HomePage() {
     {
       icon: BarChart3,
       title: 'Relatórios Executivos',
-      description: 'Dashboards gerenciais com indicadores de performance para a diretoria do Expocentro.',
+      description: 'Painéis gerenciais com indicadores de performance para a diretoria do Expocentro.',
     },
   ];
 
@@ -97,7 +97,7 @@ function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 h-auto shadow-xl transition-all hover:-translate-y-1">
                 <Link to="/dashboard">
-                  Acessar Dashboard
+                  Acessar Painel Executivo
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -179,7 +179,7 @@ function HomePage() {
             </p>
             <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-10 py-6 h-auto shadow-lg transition-transform hover:scale-[1.02]">
               <Link to="/dashboard">
-                Acessar Dashboard
+                Acessar Painel Executivo
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
