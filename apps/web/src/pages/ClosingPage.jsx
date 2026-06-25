@@ -181,7 +181,7 @@ function ClosingPage() {
                       <TableCell className="hidden 2xl:table-cell py-5">{evt.prazoPagamento}</TableCell>
                       <TableCell className="py-5">{getStatusBadge(getShortStatus(evt.statusGeral))}</TableCell>
                       <TableCell className="text-right py-5">
-                        <Button variant="ghost" size="icon" className="h-8 w-8" title="Ver detalhes">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-60 cursor-not-allowed hover:bg-transparent" title="Detalhes em breve" disabled>
                           <Eye className="h-4 w-4" />
                         </Button>
                       </TableCell>

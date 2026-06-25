@@ -95,36 +95,43 @@ function EmpresasPage() {
 
         <Card className="shadow-sm">
           <CardContent className="p-0">
-            <Table>
+            <Table className="w-full table-fixed text-[12.5px] md:text-[13px]" noHorizontalScroll>
               <TableHeader className="bg-muted/30">
                 <TableRow>
-                  <TableHead>Empresa</TableHead>
-                  <TableHead>CNPJ</TableHead>
-                  <TableHead>Cidade</TableHead>
-                  <TableHead>Último Contato</TableHead>
-                  <TableHead>Próxima Ação</TableHead>
-                  <TableHead>Data Retorno</TableHead>
-                  <TableHead>Valor Histórico</TableHead>
-                  <TableHead>Situação</TableHead>
-                  <TableHead className="text-right">Ações</TableHead>
+                  <TableHead className="w-[23%] text-[11px] uppercase tracking-wide">Empresa</TableHead>
+                  <TableHead className="hidden xl:table-cell w-[13%] text-[11px] uppercase tracking-wide">CNPJ</TableHead>
+                  <TableHead className="hidden xl:table-cell w-[11%] text-[11px] uppercase tracking-wide">Cidade</TableHead>
+                  <TableHead className="hidden 2xl:table-cell w-[10%] text-[11px] uppercase tracking-wide">Último contato</TableHead>
+                  <TableHead className="w-[20%] text-[11px] uppercase tracking-wide">Próxima ação</TableHead>
+                  <TableHead className="w-[10%] text-[11px] uppercase tracking-wide">Retorno</TableHead>
+                  <TableHead className="hidden 2xl:table-cell w-[10%] text-[11px] uppercase tracking-wide">Valor histórico</TableHead>
+                  <TableHead className="w-[10%] text-[11px] uppercase tracking-wide">Situação</TableHead>
+                  <TableHead className="w-[3%] text-right text-[11px] uppercase tracking-wide">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {empresas.map((empresa) => (
                   <TableRow 
                     key={empresa.id} 
-                    className={`table-row-tall ${empresa.status === 'Em negociação' ? 'bg-warning/5 hover:bg-warning/10' : ''}`}
+                    className={`table-row-tall h-auto align-top ${empresa.status === 'Em negociação' ? 'bg-warning/5 hover:bg-warning/10' : ''}`}
                   >
-                    <TableCell className="font-semibold">{empresa.nome}</TableCell>
-                    <TableCell className="text-muted-foreground">{empresa.cnpj}</TableCell>
-                    <TableCell>{empresa.cidade}</TableCell>
-                    <TableCell>{new Date(empresa.ultimoContato).toLocaleDateString('pt-BR')}</TableCell>
-                    <TableCell className="font-medium">{empresa.proximaAcao}</TableCell>
-                    <TableCell>{new Date(empresa.dataRetorno).toLocaleDateString('pt-BR')}</TableCell>
-                    <TableCell className="tabular-nums font-medium">{empresa.valorHistorico}</TableCell>
-                    <TableCell>{getStatusBadge(empresa.status)}</TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="ghost" size="icon">
+                    <TableCell className="py-5">
+                      <div className="font-semibold text-sm leading-tight break-words">{empresa.nome}</div>
+                      <div className="xl:hidden text-[11px] text-muted-foreground mt-1">{empresa.cidade}</div>
+                      <div className="xl:hidden text-[11px] text-muted-foreground">{empresa.cnpj}</div>
+                    </TableCell>
+                    <TableCell className="hidden xl:table-cell py-5 text-muted-foreground">{empresa.cnpj}</TableCell>
+                    <TableCell className="hidden xl:table-cell py-5">{empresa.cidade}</TableCell>
+                    <TableCell className="hidden 2xl:table-cell py-5">{new Date(empresa.ultimoContato).toLocaleDateString('pt-BR')}</TableCell>
+                    <TableCell className="py-5">
+                      <div className="font-medium leading-tight break-words">{empresa.proximaAcao}</div>
+                      <div className="2xl:hidden text-[11px] text-muted-foreground mt-1">Último contato: {new Date(empresa.ultimoContato).toLocaleDateString('pt-BR')}</div>
+                    </TableCell>
+                    <TableCell className="py-5">{new Date(empresa.dataRetorno).toLocaleDateString('pt-BR')}</TableCell>
+                    <TableCell className="hidden 2xl:table-cell py-5 tabular-nums font-medium">{empresa.valorHistorico}</TableCell>
+                    <TableCell className="py-5">{getStatusBadge(empresa.status)}</TableCell>
+                    <TableCell className="text-right py-5">
+                      <Button variant="ghost" size="icon" className="h-8 w-8 opacity-60 cursor-not-allowed hover:bg-transparent" title="Detalhes em breve" disabled>
                         <Eye className="h-4 w-4" />
                       </Button>
                     </TableCell>

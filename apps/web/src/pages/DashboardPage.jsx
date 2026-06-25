@@ -159,32 +159,37 @@ function DashboardPage() {
               <CardTitle>Próximos Eventos em Calendário</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="bg-muted/20">
-                      <TableHead>Evento</TableHead>
-                      <TableHead>Empresa</TableHead>
-                      <TableHead>Espaço Locado</TableHead>
-                      <TableHead>Data</TableHead>
-                      <TableHead>Situação financeira</TableHead>
-                      <TableHead>Pendência-chave</TableHead>
+              <Table className="w-full table-fixed text-[12.5px] md:text-[13px]" noHorizontalScroll>
+                <TableHeader className="bg-muted/20">
+                  <TableRow>
+                    <TableHead className="w-[26%] text-[11px] uppercase tracking-wide">Evento</TableHead>
+                    <TableHead className="w-[20%] text-[11px] uppercase tracking-wide">Locatário</TableHead>
+                    <TableHead className="hidden xl:table-cell w-[16%] text-[11px] uppercase tracking-wide">Espaço locado</TableHead>
+                    <TableHead className="w-[11%] text-[11px] uppercase tracking-wide">Data</TableHead>
+                    <TableHead className="w-[12%] text-[11px] uppercase tracking-wide">Situação financeira</TableHead>
+                    <TableHead className="w-[15%] text-[11px] uppercase tracking-wide">Pendência-chave</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {nextEvents.map((evento, index) => (
+                    <TableRow key={index} className="table-row-tall h-auto align-top">
+                      <TableCell className="py-5">
+                        <div className="font-semibold text-sm leading-tight break-words">{evento.evento}</div>
+                        <div className="xl:hidden text-[11px] text-muted-foreground mt-1">{evento.espacoLocado}</div>
+                      </TableCell>
+                      <TableCell className="py-5">
+                        <div className="leading-tight break-words text-muted-foreground">{evento.empresa}</div>
+                      </TableCell>
+                      <TableCell className="hidden xl:table-cell py-5">{evento.espacoLocado}</TableCell>
+                      <TableCell className="py-5">{new Date(evento.data).toLocaleDateString('pt-BR')}</TableCell>
+                      <TableCell className="py-5">{getBadgeForFinancial(evento.financialStatus)}</TableCell>
+                      <TableCell className="py-5">
+                        <div className="leading-tight break-words">{getBadgeForPending(evento.mainPending)}</div>
+                      </TableCell>
                     </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {nextEvents.map((evento, index) => (
-                      <TableRow key={index} className="table-row-tall">
-                        <TableCell className="font-semibold text-foreground">{evento.evento}</TableCell>
-                        <TableCell>{evento.empresa}</TableCell>
-                        <TableCell>{evento.espacoLocado}</TableCell>
-                        <TableCell>{new Date(evento.data).toLocaleDateString('pt-BR')}</TableCell>
-                        <TableCell>{getBadgeForFinancial(evento.financialStatus)}</TableCell>
-                        <TableCell>{getBadgeForPending(evento.mainPending)}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+                  ))}
+                </TableBody>
+              </Table>
             </CardContent>
           </Card>
         </section>
